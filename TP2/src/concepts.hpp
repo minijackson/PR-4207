@@ -2,6 +2,9 @@
 
 #ifdef __cpp_concepts
 
+#include <iterator>
+#include <type_traits>
+
 #include <cstddef>
 
 namespace concepts {
@@ -15,13 +18,38 @@ namespace concepts {
 		//{t.template coord<i>()} -> typename T::coord_type;
 	};
 
-	//template <typename T>
-	//concept bool Domain = requires(T t){
-	//};
+	template <typename T>
+	concept bool Domain = requires(T t){
+		typename T::point_type;
 
-	//template <typename T>
-	//concept bool DomainIterator = requires(T t){
-	//};
+		typename T::const_iterator;
+		t.begin();
+		{*t.begin()} -> typename T::point_type;
+		t.end();
+	};
+
+	// http://en.cppreference.com/w/cpp/concept/Iterator
+	template <typename T>
+	concept bool Iterator = std::is_copy_constructible<T>::value &&
+	std::is_copy_assignable<T>::value &&
+	std::is_destructible<T>::value &&
+	//std::is_swappable<T>::value &&
+	requires(T t) {
+		typename std::iterator_traits<T>::value_type;
+		typename std::iterator_traits<T>::difference_type;
+		typename std::iterator_traits<T>::reference;
+		typename std::iterator_traits<T>::pointer;
+		typename std::iterator_traits<T>::iterator_category;
+
+		{*t} -> typename std::iterator_traits<T>::value_type;
+		{++t} -> T&;
+	};
+
+	template <typename T>
+	concept bool DomainIterator = Iterator<T> &&
+	requires(T t){
+		typename T::domain_type;
+	};
 
 	//template <typename T>
 	//concept bool Image = requires(T t){
