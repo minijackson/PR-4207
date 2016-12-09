@@ -11,6 +11,7 @@ namespace concepts {
 		typename T::coord_type;
 		{T::dimensions} -> size_t;
 
+		// Not working…
 		//{t.template coord<i>()} -> typename T::coord_type;
 	};
 
@@ -34,6 +35,6 @@ namespace concepts {
 
 #else
 
-#define requires(X)
+#	define requires(X)
 
 #endif
