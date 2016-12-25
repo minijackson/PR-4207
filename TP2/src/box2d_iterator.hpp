@@ -8,11 +8,11 @@
 
 namespace image {
 
-	class Domain2D;
+	class Box2D;
 
-	class Domain2DIterator {
+	class Box2DIterator {
 	public:
-		using domain_type = Domain2D;
+		using domain_type = Box2D;
 
 		using value_type = Point2D;
 		using difference_type = size_t;
@@ -20,16 +20,21 @@ namespace image {
 		using pointer = Point2D*;
 		using iterator_category = std::forward_iterator_tag;
 
-		Domain2DIterator(size_t height, size_t width, Point2D value = Point2D{0, 0});
-		Domain2DIterator();
+		Box2DIterator(size_t height, size_t width, Point2D value = Point2D{0, 0});
+		Box2DIterator();
 
 		size_t height() const;
 		size_t width() const;
 
+		bool isEnd() const;
+
 		value_type operator*() const;
 
-		Domain2DIterator& operator++(int);
-		Domain2DIterator& operator++();
+		bool operator==(Box2DIterator const& other) const;
+		bool operator!=(Box2DIterator const& other) const;
+
+		Box2DIterator& operator++(int);
+		Box2DIterator& operator++();
 
 	protected:
 		void increment_value();

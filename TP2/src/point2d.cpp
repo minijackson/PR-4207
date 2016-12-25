@@ -34,4 +34,20 @@ namespace image {
 		return theY;
 	}
 
+	bool Point2D::operator==(Point2D const& other) const {
+		return (theX == other.theX) && (theY == other.theY);
+	}
+
+	bool Point2D::operator!=(Point2D const& other) const {
+		return !(*this == other);
+	}
+
+	bool Point2D::operator<(Point2D const& other) const {
+		if(theX == other.theX) {
+			return theY < other.theY;
+		}
+
+		return theX < other.theX;
+	}
+
 } // namespace image

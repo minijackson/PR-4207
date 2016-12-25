@@ -18,16 +18,6 @@ namespace concepts {
 		//{t.template coord<i>()} -> typename T::coord_type;
 	};
 
-	template <typename T>
-	concept bool Domain = requires(T t){
-		typename T::point_type;
-
-		typename T::const_iterator;
-		t.begin();
-		{*t.begin()} -> typename T::point_type;
-		t.end();
-	};
-
 	// http://en.cppreference.com/w/cpp/concept/Iterator
 	template <typename T>
 	concept bool Iterator = std::is_copy_constructible<T>::value &&
@@ -49,6 +39,20 @@ namespace concepts {
 	concept bool DomainIterator = Iterator<T> &&
 	requires(T t){
 		typename T::domain_type;
+	};
+
+	template <typename T>
+	concept bool Domain = requires(T t){
+		typename T::point_type;
+		typename T::const_iterator;
+
+		requires DomainIterator<typename T::const_iterator>;
+
+		{t.begin()} -> typename T::const_iterator;
+		{*(t.begin())} -> typename T::point_type;
+		{t.end()} -> typename T::const_iterator;
+	} && requires(T t, typename T::point_type point) {
+		{t.contains(point)} -> bool;
 	};
 
 	//template <typename T>

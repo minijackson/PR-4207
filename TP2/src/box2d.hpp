@@ -1,21 +1,25 @@
 #pragma once
 
 #include "point2d.hpp"
-#include "domain2d_iterator.hpp"
+#include "box2d_iterator.hpp"
 
 #include <cstddef>
 
 namespace image {
 
-	class Domain2D {
+	class Box2D {
 	public:
 		using point_type     = Point2D;
-		using const_iterator = Domain2DIterator;
+		using const_iterator = Box2DIterator;
 
-		Domain2D(size_t height, size_t width);
+		Box2D() = delete;
+
+		Box2D(size_t height, size_t width);
 
 		size_t height() const;
 		size_t width() const;
+
+		bool contains(point_type point) const;
 
 		const_iterator begin() const;
 		const_iterator end() const;
@@ -25,4 +29,4 @@ namespace image {
 		size_t theWidth;
 	};
 
-} // namespace image
+}
