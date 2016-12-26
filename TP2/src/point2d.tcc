@@ -1,7 +1,13 @@
 #pragma once
 
-#include "point2d.hpp"
-
 namespace image {
 
-} // namespace image
+	constexpr Point2D::Point2D()
+	      : theX()
+	      , theY() {}
+
+	constexpr Point2D::Point2D(coord_type x, coord_type y)
+	      : theX(x)
+	      , theY(y) {}
+
+}

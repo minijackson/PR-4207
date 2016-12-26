@@ -10,14 +10,16 @@ namespace image {
 	      , value(value) {}
 
 	Box2DIterator::Box2DIterator()
-	      : value{0, 0}
+	      : theHeight()
+	      , theWidth()
+	      , value()
 	      , end(true) {}
 
-	size_t Box2DIterator::height() const {
+	auto Box2DIterator::height() const -> coord_type {
 		return theHeight;
 	}
 
-	size_t Box2DIterator::width() const {
+	auto Box2DIterator::width() const -> coord_type {
 		return theWidth;
 	}
 
@@ -69,4 +71,4 @@ namespace image {
 		}
 	}
 
-} // namespace image
+}

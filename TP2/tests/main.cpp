@@ -1,7 +1,8 @@
+#include "../src/box2d.hpp"
 #include "../src/concepts.hpp"
 #include "../src/image.hpp"
+#include "../src/neighbours2d_iterator.hpp"
 #include "../src/point2d.hpp"
-#include "../src/box2d.hpp"
 #include "../src/utils.hpp"
 
 #include <iostream>
@@ -27,21 +28,62 @@ int main() {
 
 	image::Box2D d1(10, 10);
 
+	assert((d1.contains({4, 2})));
+	assert((!d1.contains({13, 37})));
+	assert((!d1.contains({-1, 5})));
+	assert((!d1.contains({1, -5})));
+
 	std::cout << d1.width() << ", " << d1.height() << std::endl;
 
-	image::Image2D<bool> im(d1);
+	image::Image2D<bool> im1(d1);
+	im1[{2, 2}] = true;
 
-	im[{1, 2}] = true;
-
-	for(size_t i = 0; i < 10; ++i) {
-		for(size_t j = 0; j < 10; ++j) {
-			if(i == 1 && j == 2) {
-				assert((im[{i, j}]));
+	for(int i = 0; i < 10; ++i) {
+		for(int j = 0; j < 10; ++j) {
+			if(i == 2 && j == 2) {
+				assert((im1[{i, j}]));
 			} else {
-				assert((!im[{i, j}]));
+				assert((!im1[{i, j}]));
+			}
+		}
+	}
+
+	// FTW
+	im1[{7, 2}] = true;
+
+	im1[{1, 6}] = true;
+	im1[{2, 7}] = true;
+	im1[{3, 7}] = true;
+	im1[{4, 7}] = true;
+	im1[{5, 7}] = true;
+	im1[{6, 7}] = true;
+	im1[{7, 7}] = true;
+	im1[{8, 6}] = true;
+
+	std::cout << im1;
+
+	image::Image2D<size_t> im2(d1);
+	im2[{7, 3}] = 42;
+	std::cout << im2;
+
+	for(int i = 0; i < 10; ++i) {
+		for(int j = 0; j < 10; ++j) {
+			if(i == 7 && j == 3) {
+				assert((im2[{i, j}] == 42));
+			} else {
+				assert((im2[{i, j}] == 0));
 			}
 		}
 	}
 
 	print_domain(d1);
+
+	std::cout << "==============================" << std::endl;
+	{
+		auto it = d1.neighbours_begin(p1), end = d1.neighbours_end();
+		while(it != end) {
+			std::cout << *it << std::endl;
+			++it;
+		}
+	}
 }

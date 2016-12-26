@@ -2,10 +2,6 @@
 
 namespace image {
 
-	Point2D::Point2D(size_t x, size_t y)
-	      : theX(x)
-	      , theY(y) {}
-
 	Point2D::coord_type& Point2D::x() {
 		return theX;
 	}
@@ -49,5 +45,14 @@ namespace image {
 
 		return theX < other.theX;
 	}
+
+	Point2D Point2D::operator+(Point2D const& other) const {
+		return {theX + other.theX, theY + other.theY};
+	}
+
+	auto Point2D::operator-(Point2D const& other) const -> difference_type {
+		return {theX - other.theX, theY - other.theY};
+	}
+
 
 } // namespace image

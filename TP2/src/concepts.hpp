@@ -10,9 +10,21 @@
 namespace concepts {
 
 	template <typename T>
-	concept bool Point = requires(T t, size_t i){
+	concept bool Point = requires(T t, size_t i) {
 		typename T::coord_type;
 		{T::dimensions} -> size_t;
+
+		t == t;
+		t != t;
+		{t + t} -> T;
+
+		// Makes gcc segfault (probably because of infinite recursion with Point2D)
+		//requires Point<decltype(t - t)>;
+
+		typename T::difference_type;
+		// Makes gcc segfault (again…)
+		//requires Point<typename T::difference_type>;
+		{t - t} -> typename T::difference_type;
 
 		// Not working…
 		//{t.template coord<i>()} -> typename T::coord_type;
@@ -37,8 +49,14 @@ namespace concepts {
 
 	template <typename T>
 	concept bool DomainIterator = Iterator<T> &&
-	requires(T t){
+	requires(T t) {
 		typename T::domain_type;
+	};
+
+	template <typename T>
+	concept bool NeighboursIterator = Iterator<T> &&
+	requires(T t) {
+		t;
 	};
 
 	template <typename T>
@@ -55,13 +73,16 @@ namespace concepts {
 		{t.contains(point)} -> bool;
 	};
 
-	//template <typename T>
-	//concept bool Image = requires(T t){
-	//};
+	template <typename T>
+	concept bool Image = requires(T t){
+		typename T::value_type;
+		typename T::domain_type;
+		typename T::point_type;
 
-	//template <typename T>
-	//concept bool NeighboursIterator = requires(T t){
-	//};
+		{t.domain()} -> typename T::domain_type;
+	} && requires(T t, typename T::point_type point) {
+		{t[point]} -> typename T::value_type;
+	};
 
 }
 

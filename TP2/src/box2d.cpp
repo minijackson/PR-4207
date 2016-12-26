@@ -7,14 +7,15 @@ namespace image {
 	      , theWidth(width) {}
 
 	bool Box2D::contains(point_type point) const {
-		return (point.x() < theWidth) && (point.y() < theHeight);
+		return (0 <= point.x()) && (point.x() < theWidth) && (0 <= point.y()) &&
+		       (point.y() < theHeight);
 	}
 
-	size_t Box2D::height() const {
+	auto Box2D::height() const -> coord_type {
 		return theHeight;
 	}
 
-	size_t Box2D::width() const {
+	auto Box2D::width() const -> coord_type {
 		return theWidth;
 	}
 
@@ -26,4 +27,12 @@ namespace image {
 		return const_iterator();
 	}
 
-} // namespace image
+	auto Box2D::neighbours_begin(point_type center) const -> neighbours_iterator {
+		return neighbours_iterator(*this, center);
+	}
+
+	auto Box2D::neighbours_end() const -> neighbours_iterator {
+		return neighbours_iterator();
+	}
+
+}

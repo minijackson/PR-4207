@@ -1,6 +1,7 @@
 #pragma once
 
 #include "concepts.hpp"
+#include "image.hpp"
 
 #include <iostream>
 #include <functional>
@@ -23,7 +24,7 @@ namespace image {
 			print_point<Point, dimensions, i - 1>(os, point);
 		}
 
-	} // namespace impl
+	}
 
 	template <typename Point>
 	requires(concepts::Point<Point>)
@@ -34,4 +35,39 @@ namespace image {
 		return os;
 	}
 
-} // namespace image
+	namespace impl {
+		template <typename T, typename Functor>
+		std::ostream& print_image2d(std::ostream& os, Image2D<T> image, Functor&& print_char) {
+			auto domain  = image.domain();
+			size_t width = domain.width(), counter = width;
+
+			for(auto const& point : domain) {
+				print_char(os, image[point]);
+
+				if(--counter == 0) {
+					os << std::endl;
+					counter = width;
+				}
+			}
+
+			return os;
+		}
+	}
+
+	template <typename T>
+	std::ostream& operator<<(std::ostream& os, Image2D<T> image) {
+		return impl::print_image2d(
+		        os, image, [](std::ostream& os, T value) { os << " " << value; });
+	}
+
+	template <>
+	std::ostream& operator<<(std::ostream& os, Image2D<bool> image) {
+		return impl::print_image2d(os, image, [](std::ostream& os, bool value) {
+			if(value) {
+				os << "██";
+			} else {
+				os << "  ";
+			}
+		});
+	}
+}

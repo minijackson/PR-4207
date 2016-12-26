@@ -6,11 +6,12 @@ namespace image {
 
 	class Point2D {
 	public:
-		using coord_type                         = size_t;
+		using coord_type                         = int;
+		using difference_type                    = Point2D;
 		static constexpr size_t const dimensions = 2;
 
-		Point2D() = default;
-		Point2D(size_t x, size_t y);
+		constexpr Point2D();
+		constexpr Point2D(coord_type x, coord_type y);
 		coord_type& x();
 		coord_type& y();
 
@@ -24,11 +25,14 @@ namespace image {
 		bool operator!=(Point2D const& other) const;
 		bool operator<(Point2D const& other) const;
 
+		Point2D operator+(Point2D const& other) const;
+		difference_type operator-(Point2D const& other) const;
+
 	protected:
-		size_t theX;
-		size_t theY;
+		coord_type theX;
+		coord_type theY;
 	};
 
-} // namespace image
+}
 
 #include "point2d.tcc"

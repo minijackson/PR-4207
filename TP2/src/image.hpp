@@ -17,13 +17,15 @@ namespace image {
 
 		Image() = delete;
 
-		explicit Image(DomainType domain);
+		explicit Image(domain_type domain);
 
 		value_type& operator[](point_type const& coord);
 		value_type operator[](point_type const& coord) const;
 
+		domain_type domain() const;
+
 	private:
-		DomainType domain;
+		DomainType theDomain;
 		std::map<point_type, value_type> points;
 	};
 
