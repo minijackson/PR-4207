@@ -8,9 +8,9 @@ namespace image {
 
 	namespace impl {
 		enum NeighbourDirection {
-			NORTH_WEST, NORTH, NORTH_EAST,
-			WEST,              EAST,
-			SOUTH_WEST, SOUTH, SOUTH_EAST
+			      NORTH,
+			WEST,        EAST,
+			      SOUTH, 
 		};
 
 	}

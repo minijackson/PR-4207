@@ -21,11 +21,11 @@ namespace image {
 		using pointer           = Point2D*;
 		using iterator_category = std::forward_iterator_tag;
 
-		Box2DIterator(size_t height, size_t width, Point2D value = Point2D{0, 0});
+		Box2DIterator(value_type topLeft, value_type bottomRight, value_type value);
 		Box2DIterator();
 
-		coord_type height() const;
-		coord_type width() const;
+		value_type topLeft() const;
+		value_type bottomRight() const;
 
 		bool isEnd() const;
 
@@ -40,9 +40,9 @@ namespace image {
 	protected:
 		void increment_value();
 
-		coord_type theHeight;
-		coord_type theWidth;
-		Point2D value;
+		value_type theTopLeft;
+		value_type theBottomRight;
+		value_type value;
 		bool end = false;
 	};
 

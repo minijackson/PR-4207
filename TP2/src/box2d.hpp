@@ -18,10 +18,14 @@ namespace image {
 		// Creates null-sized box
 		Box2D() = default;
 
-		Box2D(size_t height, size_t width);
+		Box2D(coord_type width, coord_type height);
+		Box2D(point_type topLeft, point_type bottomRight);
 
-		coord_type height() const;
+		point_type topLeft() const;
+		point_type bottomRight() const;
+
 		coord_type width() const;
+		coord_type height() const;
 
 		bool contains(point_type point) const;
 
@@ -32,8 +36,8 @@ namespace image {
 		neighbours_iterator neighbours_end() const;
 
 	protected:
-		coord_type theHeight;
-		coord_type theWidth;
+		point_type theTopLeft;
+		point_type theBottomRight;
 	};
 
 }

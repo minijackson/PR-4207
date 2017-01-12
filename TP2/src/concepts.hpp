@@ -32,10 +32,10 @@ namespace concepts {
 
 	// http://en.cppreference.com/w/cpp/concept/Iterator
 	template <typename T>
-	concept bool Iterator = std::is_copy_constructible<T>::value &&
-	std::is_copy_assignable<T>::value &&
-	std::is_destructible<T>::value &&
-	//std::is_swappable<T>::value &&
+	concept bool Iterator = std::is_copy_constructible<T>::value and
+	std::is_copy_assignable<T>::value and
+	std::is_destructible<T>::value and
+	//std::is_swappable<T>::value and
 	requires(T t) {
 		typename std::iterator_traits<T>::value_type;
 		typename std::iterator_traits<T>::difference_type;
@@ -48,13 +48,13 @@ namespace concepts {
 	};
 
 	template <typename T>
-	concept bool DomainIterator = Iterator<T> &&
+	concept bool DomainIterator = Iterator<T> and
 	requires(T t) {
 		typename T::domain_type;
 	};
 
 	template <typename T>
-	concept bool NeighboursIterator = Iterator<T> &&
+	concept bool NeighboursIterator = Iterator<T> and
 	requires(T t) {
 		t;
 	};
@@ -69,7 +69,7 @@ namespace concepts {
 		{t.begin()} -> typename T::const_iterator;
 		{*(t.begin())} -> typename T::point_type;
 		{t.end()} -> typename T::const_iterator;
-	} && requires(T t, typename T::point_type point) {
+	} and requires(T t, typename T::point_type point) {
 		{t.contains(point)} -> bool;
 	};
 
@@ -80,7 +80,7 @@ namespace concepts {
 		typename T::point_type;
 
 		{t.domain()} -> typename T::domain_type;
-	} && requires(T t, typename T::point_type point) {
+	} and requires(T t, typename T::point_type point) {
 		{t[point]} -> typename T::value_type;
 	};
 

@@ -6,7 +6,15 @@ namespace image {
 		return theX;
 	}
 
+	Point2D::coord_type const& Point2D::x() const {
+		return theX;
+	}
+
 	Point2D::coord_type& Point2D::y() {
+		return theY;
+	}
+
+	Point2D::coord_type const& Point2D::y() const {
 		return theY;
 	}
 
@@ -31,11 +39,11 @@ namespace image {
 	}
 
 	bool Point2D::operator==(Point2D const& other) const {
-		return (theX == other.theX) && (theY == other.theY);
+		return (theX == other.theX) and (theY == other.theY);
 	}
 
 	bool Point2D::operator!=(Point2D const& other) const {
-		return !(*this == other);
+		return not (*this == other);
 	}
 
 	bool Point2D::operator<(Point2D const& other) const {

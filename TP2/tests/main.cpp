@@ -29,21 +29,21 @@ int main() {
 	image::Box2D d1(10, 10);
 
 	assert((d1.contains({4, 2})));
-	assert((!d1.contains({13, 37})));
-	assert((!d1.contains({-1, 5})));
-	assert((!d1.contains({1, -5})));
+	assert((not d1.contains({13, 37})));
+	assert((not d1.contains({-1, 5})));
+	assert((not d1.contains({1, -5})));
 
-	std::cout << d1.width() << ", " << d1.height() << std::endl;
+	std::cout << d1.topLeft() << ", " << d1.bottomRight() << std::endl;
 
 	image::Image2D<bool> im1(d1);
 	im1[{2, 2}] = true;
 
 	for(int i = 0; i < 10; ++i) {
 		for(int j = 0; j < 10; ++j) {
-			if(i == 2 && j == 2) {
+			if(i == 2 and j == 2) {
 				assert((im1[{i, j}]));
 			} else {
-				assert((!im1[{i, j}]));
+				assert((not im1[{i, j}]));
 			}
 		}
 	}
@@ -68,7 +68,7 @@ int main() {
 
 	for(int i = 0; i < 10; ++i) {
 		for(int j = 0; j < 10; ++j) {
-			if(i == 7 && j == 3) {
+			if(i == 7 and j == 3) {
 				assert((im2[{i, j}] == 42));
 			} else {
 				assert((im2[{i, j}] == 0));

@@ -4,23 +4,23 @@
 
 namespace image {
 
-	Box2DIterator::Box2DIterator(size_t height, size_t width, Point2D value)
-	      : theHeight(height)
-	      , theWidth(width)
+	Box2DIterator::Box2DIterator(value_type topLeft, value_type bottomRight, value_type value)
+	      : theTopLeft(topLeft)
+	      , theBottomRight(bottomRight)
 	      , value(value) {}
 
 	Box2DIterator::Box2DIterator()
-	      : theHeight()
-	      , theWidth()
+	      : theTopLeft()
+	      , theBottomRight()
 	      , value()
 	      , end(true) {}
 
-	auto Box2DIterator::height() const -> coord_type {
-		return theHeight;
+	auto Box2DIterator::topLeft() const -> value_type {
+		return theTopLeft;
 	}
 
-	auto Box2DIterator::width() const -> coord_type {
-		return theWidth;
+	auto Box2DIterator::bottomRight() const -> value_type {
+		return theBottomRight;
 	}
 
 	bool Box2DIterator::isEnd() const {
@@ -39,11 +39,11 @@ namespace image {
 	}
 
 	bool Box2DIterator::operator==(Box2DIterator const& other) const {
-		return (end && other.end) || ((end == other.end) && (value == other.value));
+		return (end and other.end) or ((end == other.end) and (value == other.value));
 	}
 
 	bool Box2DIterator::operator!=(Box2DIterator const& other) const {
-		return !(*this == other);
+		return not (*this == other);
 	}
 
 	Box2DIterator& Box2DIterator::operator++() {
@@ -59,11 +59,11 @@ namespace image {
 	}
 
 	void Box2DIterator::increment_value() {
-		if(value.x() == theWidth - 1) {
-			if(value.y() == theHeight - 1) {
+		if(value.x() == theBottomRight.x() - 1) {
+			if(value.y() == theBottomRight.y() - 1) {
 				end = true;
 			} else {
-				value.x() = 0;
+				value.x() = theTopLeft.x();
 				++value.y();
 			}
 		} else {

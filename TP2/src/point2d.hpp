@@ -12,8 +12,11 @@ namespace image {
 
 		constexpr Point2D();
 		constexpr Point2D(coord_type x, coord_type y);
+
 		coord_type& x();
+		coord_type const& x() const;
 		coord_type& y();
+		coord_type const& y() const;
 
 		template <size_t dimension>
 		coord_type& coord();

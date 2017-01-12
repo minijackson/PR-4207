@@ -8,7 +8,7 @@ namespace image {
 	Neighbours2DIterator<DomainType>::Neighbours2DIterator(domain_type domain, value_type point)
 	      : domain(domain)
 	      , point(point)
-	      , currentDirection(impl::NORTH_WEST)
+	      , currentDirection(impl::NORTH)
 	      , neighbour(point + to_translate_vector(currentDirection))
 	      , end(false) {}
 
@@ -24,13 +24,13 @@ namespace image {
 
 	template <typename DomainType>
 	bool Neighbours2DIterator<DomainType>::operator==(Neighbours2DIterator const& other) const {
-		return (end && other.end) ||
-		       ((end == other.end) && (point == other.point) && (neighbour == other.neighbour));
+		return (end and other.end) or
+		       ((end == other.end) and (point == other.point) and (neighbour == other.neighbour));
 	}
 
 	template <typename DomainType>
 	bool Neighbours2DIterator<DomainType>::operator!=(Neighbours2DIterator const& other) const {
-		return !(*this == other);
+		return not (*this == other);
 	}
 
 	template <typename DomainType>
@@ -54,36 +54,28 @@ namespace image {
 		}
 
 		do {
-			if(currentDirection != impl::SOUTH_EAST) {
+			if(currentDirection != impl::SOUTH) {
 				currentDirection = static_cast<impl::NeighbourDirection>(currentDirection + 1);
 				neighbour        = point + to_translate_vector(currentDirection);
 			} else {
 				end = true;
 				return;
 			}
-		} while(!domain.contains(neighbour));
+		} while(not domain.contains(neighbour));
 	}
 
 	template <typename DomainType>
 	auto Neighbours2DIterator<DomainType>::to_translate_vector(impl::NeighbourDirection direction) const
 	        -> value_type {
 		switch(direction) {
-			case impl::NORTH_WEST:
-				return {-1, -1};
 			case impl::NORTH:
 				return {0, -1};
-			case impl::NORTH_EAST:
-				return {1, -1};
 			case impl::WEST:
 				return {-1, 0};
 			case impl::EAST:
 				return {1, 0};
-			case impl::SOUTH_WEST:
-				return {-1, 1};
 			case impl::SOUTH:
 				return {0, 1};
-			case impl::SOUTH_EAST:
-				return {1, 1};
 		}
 
 		// To silence warning
