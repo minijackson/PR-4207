@@ -65,13 +65,14 @@ int main() {
 	std::cout << "==============================" << std::endl;
 
 	image::Point2D begin = *std::find_if(
-	        input.domain().begin(), input.domain().end(), [input](image::Point2D point) {
+	        input.domain().begin(), input.domain().end(), [&input](image::Point2D point) {
 		        return input[point] == 2;
 		    });
 
-	image::Point2D end = *std::find_if(input.domain().begin(),
-	                                   input.domain().end(),
-	                                   [input](image::Point2D point) { return input[point] == 3; });
+	image::Point2D end = *std::find_if(
+	        input.domain().begin(), input.domain().end(), [&input](image::Point2D point) {
+		        return input[point] == 3;
+		    });
 
 	auto solution = image::backtrack(distanceMap, begin, end);
 
