@@ -9,6 +9,26 @@ namespace image {
 	      : theDomain(theDomain) {}
 
 	template <typename DomainType, typename T>
+	template <typename OtherImage>
+	requires(concepts::Image<OtherImage>)
+	Image<DomainType, T>::Image(OtherImage const& image)
+	      : theDomain(DomainType(image)) {
+		for(auto point : theDomain) {
+			(*this)[point] = image[point];
+		}
+	}
+
+	template <typename DomainType, typename T>
+	template <typename OtherImage>
+	requires(concepts::Image<OtherImage>)
+	Image<DomainType, T>::Image(DomainType theDomain, OtherImage const& image)
+	      : theDomain(theDomain) {
+		for(auto point : theDomain) {
+			(*this)[point] = image[point];
+		}
+	}
+
+	template <typename DomainType, typename T>
 	auto Image<DomainType, T>::operator[](point_type const& coord) -> value_type& {
 #ifndef NDEBUG
 		if(not theDomain.contains(coord)) {

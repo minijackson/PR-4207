@@ -13,6 +13,10 @@ namespace image {
 	      , end(false) {}
 
 	template <typename DomainType>
+	Neighbours2DIterator<DomainType>::Neighbours2DIterator(domain_type domain)
+	      : domain(domain) {}
+
+	template <typename DomainType>
 	bool Neighbours2DIterator<DomainType>::isEnd() const {
 		return end;
 	}

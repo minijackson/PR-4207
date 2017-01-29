@@ -55,4 +55,10 @@ int main() {
 	std::cout << input3;
 	std::cout << "==============================" << std::endl;
 	std::cout << image::distanceTransform(input3);
+
+	image::PartialImage2D<bool> input4(input3);
+	std::cout << "==============================" << std::endl;
+	std::cout << input4 << std::endl;
+	std::cout << "==============================" << std::endl;
+	std::cout << image::distanceTransform(input4);
 }

@@ -2,6 +2,7 @@
 #include "../src/concepts.hpp"
 #include "../src/image.hpp"
 #include "../src/neighbours2d_iterator.hpp"
+#include "../src/partial_box2d.hpp"
 #include "../src/point2d.hpp"
 #include "../src/utils.hpp"
 
@@ -86,4 +87,19 @@ int main() {
 			++it;
 		}
 	}
+
+	image::PartialBox2D<image::Box2D, size_t> part(im2);
+
+	std::cout << "==============================" << std::endl;
+	for(auto point : part) {
+		std::cout << point << " -> " << im2[point] << std::endl;
+	}
+
+	image::PartialImage2D<size_t> im3(im2);
+
+	std::cout << "==============================" << std::endl;
+	for(auto point : im3.domain()) {
+		std::cout << point << " -> " << im3[point] << std::endl;
+	}
+
 }

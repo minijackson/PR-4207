@@ -27,6 +27,7 @@ namespace image {
 		using iterator_category = std::forward_iterator_tag;
 
 		Neighbours2DIterator() = default;
+		Neighbours2DIterator(DomainType domain);
 		explicit Neighbours2DIterator(domain_type domain, value_type point);
 
 		bool isEnd() const;
