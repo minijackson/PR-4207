@@ -1,7 +1,5 @@
 #include "box2d_iterator.hpp"
 
-#include <iostream>
-
 namespace image {
 
 	Box2DIterator::Box2DIterator(value_type topLeft, value_type bottomRight, value_type value)
@@ -30,8 +28,7 @@ namespace image {
 	auto Box2DIterator::operator*() const -> value_type {
 #ifndef NDEBUG
 		if(end) {
-			std::cerr << "Dereferencing past-the-end Point2DIterator" << std::endl;
-			std::exit(-1);
+			throw std::runtime_error("Dereferencing past-the-end Point2DIterator");
 		}
 #endif
 

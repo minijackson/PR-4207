@@ -2,8 +2,6 @@
 
 #include "image.hpp"
 
-#include <iostream>
-
 namespace image {
 
 	template <typename DomainType, typename T>
@@ -14,8 +12,7 @@ namespace image {
 	auto Image<DomainType, T>::operator[](point_type const& coord) -> value_type& {
 #ifndef NDEBUG
 		if(not theDomain.contains(coord)) {
-			std::cerr << "Accessing out of domain point in image: " << coord << std::endl;
-			std::exit(-1);
+			throw std::runtime_error("Accessing out of domain point in image");
 		}
 #endif
 
@@ -27,12 +24,15 @@ namespace image {
 	        -> value_type {
 #ifndef NDEBUG
 		if(not theDomain.contains(coord)) {
-			std::cerr << "Accessing out of domain point in image: " << coord << std::endl;
-			std::exit(-1);
+			throw std::runtime_error("Accessing out of domain point in image");
 		}
 #endif
 
-		return points[coord];
+		if(points.count(coord)) {
+			return points.at(coord);
+		} else {
+			return T();
+		}
 	}
 
 	template <typename DomainType, typename T>
